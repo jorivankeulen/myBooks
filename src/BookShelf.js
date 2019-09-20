@@ -7,7 +7,8 @@ class BookShelf extends Component {
     render() {
         const { 
             title,
-            books
+            books,
+            onMoveBook,
         } = this.props;
 
         return(
@@ -19,10 +20,9 @@ class BookShelf extends Component {
                         <Book 
                             key={book.id}
                             book={book}
+                            onMoveBook={onMoveBook}
                         />
                     ))}
-
-
                 </ol>
                 </div>
             </div>

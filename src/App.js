@@ -33,6 +33,13 @@ class BooksApp extends React.Component {
     ))
   }
 
+  moveBook = (book, shelf) => {
+    console.log(book, shelf)
+    BooksAPI.update(book, shelf).then((res) => (
+      console.log(res)
+      //setstate book.shelf
+    ))
+  }
 
 
   render() {
@@ -75,14 +82,17 @@ class BooksApp extends React.Component {
                 <BookShelf 
                   title="Currently Reading"
                   books={currentlyReadingCollection}
+                  onMoveBook={this.moveBook}
                 />
                 <BookShelf 
                   title="Want To Read"
                   books={wantToReadCollection}
+                  onMoveBook={this.moveBook}
                 />
                 <BookShelf 
                   title="Read"
                   books={readCollection}
+                  onMoveBook={this.moveBook}
                 />
               </div>
             </div>
