@@ -40,32 +40,21 @@ class BooksApp extends React.Component {
   }
 
   moveBook = (book, shelf) => {
-    let id = book.id
-    book.shelf = shelf
-    BooksAPI.update(book, shelf).then((books) => {
-      // this.setState(prevState => ({
-      //   books: this.bookExists 
-      //     ? prevState.books.map(
-      //       book => book.id === id ? { ...book, shelf: shelf} : book
-      //     )
-      //     : prevState.books.push(book)
-      // }))
-      this.setState(prevState => ({
-        books: !this.bookExists 
-          ? prevState.books.push(book)
-          : this.state.books
-      }))
-      // chain-link? 
-      // or integrate into one setState?
-      // or separate moveBook & addBook methods?
+    let _books = Object.assign(this.state.books, [])
+    
+    if (!this.bookExists(book)) {
+      let _newBook = book
+      _newBook.shelf = shelf
+      _books.push(_newBook)
+      this.setState({books: _books})
+    } else {
+      let _id = book.id
       this.setState(prevState => ({
         books: prevState.books.map(
-          book => book.id === id ? { ...book, shelf: shelf} : book
+          book => book.id === _id ? { ...book, shelf: shelf} : book
         )
       }))
-
-      
-    })
+    }
   }
 
 
