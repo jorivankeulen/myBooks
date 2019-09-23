@@ -26,6 +26,10 @@ To add a book, use the `Add a book` button in the bottom right of the page.
     ├── App.js # This is the root of your app. Contains static HTML right now.
     ├── App.test.js # Used for testing. Provided with Create React App. Testing is encouraged, but not required.
     ├── BooksAPI.js # A JavaScript API for the provided Udacity backend. Instructions for the methods are below.
+    ├── BookShelf.js # A collection component for your books per category.
+    ├── Book.js # A component for individual books.
+    ├── BookMenu.js # The menu per book to change categories.
+    ├── AddBook.js # A component to search and add books to your collection.
     ├── icons # Helpful images for your app. Use at your discretion.
     │   ├── add.svg
     │   ├── arrow-back.svg
