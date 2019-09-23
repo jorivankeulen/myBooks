@@ -8,6 +8,7 @@ import { Route, Link } from "react-router-dom"
 class BooksApp extends React.Component {
   state = {
     books: [],
+    searchResults: [],
   }
 
   constructor() {
@@ -19,12 +20,19 @@ class BooksApp extends React.Component {
         books
       })
     ))
+    
   }
 
   getBooksByShelf = (shelf) => {
     return this.state.books.filter((book) => (
       book.shelf.includes(shelf)
     ))
+  }
+
+  searchBooks = (query) => {
+    BooksAPI.search(query).then((data) => {
+      this.setState({searchResults: data})
+    })
   }
 
   moveBook = (book, shelf) => {
@@ -45,6 +53,7 @@ class BooksApp extends React.Component {
     const wantToReadCollection = this.getBooksByShelf("wantToRead");
     const readCollection = this.getBooksByShelf("read");
 
+    const { searchResults } = this.state
 
     return (
       <div className="app">
@@ -77,7 +86,14 @@ class BooksApp extends React.Component {
             </div>
           </div>
         )} />
-        <Route path="/add/" component={AddBook} />
+        <Route path="/add/" render={() => (
+          <AddBook 
+            onMoveBook={this.moveBook}
+            onSearchBooks={this.searchBooks}
+            books={searchResults}
+          />
+        )} />
+
       </div>
     )
   }

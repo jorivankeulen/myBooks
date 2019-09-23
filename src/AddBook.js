@@ -1,18 +1,47 @@
 import React, {Component} from 'react'
 import { Link } from "react-router-dom"
+import Book from './Book'
 
 class AddBook extends Component {
+
+    state = {
+        query: ''
+    }    
+
+    handleChange = (query) => {
+        this.setState(() => ({
+            query: query.trim()
+        }))
+        this.props.onSearchBooks(query)
+    }
+
     render(){
+        // const books = []
+        const { query } = this.state
+        const { onMoveBook, books } = this.props
         return(
             <div className="search-books">
                 <div className="search-books-bar">
                 <Link className="close-search" to="/">Close</Link>
                 <div className="search-books-input-wrapper">
-                    <input type="text" placeholder="Search by title or author"/>
+                    <input 
+                        value={query} 
+                        onChange={(event) => this.handleChange(event.target.value)}
+                        type="text" 
+                        placeholder="Search by title or author"/>
                 </div>
                 </div>
                 <div className="search-books-results">
-                <ol className="books-grid"></ol>
+                <ol className="books-grid">
+                    {books.map((book) => (
+                        <Book 
+                            key={book.id}
+                            book={book}
+                            onMoveBook={onMoveBook}
+                        />
+                    ))}
+
+                </ol>
                 </div>
             </div>            
         )
