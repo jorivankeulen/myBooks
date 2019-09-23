@@ -8,9 +8,14 @@ class AddBook extends Component {
         query: ''
     }    
 
+    componentDidMount() {
+        this.setState({query: ''})
+        this.props.clearSearch()
+    }
+
     handleChange = (query) => {
         this.setState(() => ({
-            query: query.trim()
+            query: query
         }))
         this.props.onSearchBooks(query)
     }

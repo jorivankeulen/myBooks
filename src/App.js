@@ -20,7 +20,6 @@ class BooksApp extends React.Component {
         books
       })
     ))
-    
   }
 
   getBooksByShelf = (shelf) => {
@@ -31,7 +30,7 @@ class BooksApp extends React.Component {
 
   searchBooks = (query) => {
     BooksAPI.search(query).then((data) => {
-      this.setState({searchResults: data})
+      this.setState({searchResults: (data != null && data.length > 0) ? data : []})
     })
   }
 
@@ -39,24 +38,33 @@ class BooksApp extends React.Component {
     return this.state.books.some(b => b.id === book.id)
   }
 
+  clearSearch = () => {
+    this.setState({searchResults: []})
+  }
   moveBook = (book, shelf) => {
     let _books = Object.assign(this.state.books, [])
-    
+
+    // New book
     if (!this.bookExists(book)) {
-      let _newBook = book
-      _newBook.shelf = shelf
-      _books.push(_newBook)
-      this.setState({books: _books})
+      BooksAPI.update(book, shelf).then((books) => {
+        let _newBook = book
+        _newBook.shelf = shelf
+        _books.push(_newBook)
+        this.setState({books: _books})
+      })
+    // Existing book
     } else {
-      let _id = book.id
-      this.setState(prevState => ({
-        books: prevState.books.map(
-          book => book.id === _id ? { ...book, shelf: shelf} : book
-        )
-      }))
+      BooksAPI.update(book, shelf).then((books) => {
+        let _id = book.id
+        this.setState(prevState => ({
+          books: prevState.books.map(
+            book => book.id === _id ? { ...book, shelf: shelf} : book
+          )
+        }))
+      })
+
     }
   }
-
 
   render() {
     const currentlyReadingCollection = this.getBooksByShelf("currentlyReading");
@@ -104,7 +112,7 @@ class BooksApp extends React.Component {
             }}
             onSearchBooks={this.searchBooks}
             books={searchResults}
-            
+            clearSearch={this.clearSearch}
           />
         )} />
 
