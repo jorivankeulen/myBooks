@@ -18,7 +18,7 @@ class AddBook extends Component {
     render(){
         // const books = []
         const { query } = this.state
-        const { onMoveBook, books } = this.props
+        const { onAddBook, books } = this.props
         return(
             <div className="search-books">
                 <div className="search-books-bar">
@@ -37,7 +37,7 @@ class AddBook extends Component {
                         <Book 
                             key={book.id}
                             book={book}
-                            onMoveBook={onMoveBook}
+                            onMoveBook={onAddBook}
                         />
                     ))}
 

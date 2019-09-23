@@ -35,15 +35,37 @@ class BooksApp extends React.Component {
     })
   }
 
+  bookExists = (book) => {
+    return this.state.books.some(b => b.id === book.id)
+  }
+
+  addBook = (book, shelve) => {
+    
+  }
+
   moveBook = (book, shelf) => {
     let id = book.id
-   
+    book.shelf = shelf
     BooksAPI.update(book, shelf).then((books) => {
+      // this.setState(prevState => ({
+      //   books: this.bookExists 
+      //     ? prevState.books.map(
+      //       book => book.id === id ? { ...book, shelf: shelf} : book
+      //     )
+      //     : prevState.books.push(book)
+      // }))
+      this.setState(prevState => ({
+        books: !this.bookExists 
+          ? prevState.books.push(book)
+          : this.state.books
+      }))
       this.setState(prevState => ({
         books: prevState.books.map(
           book => book.id === id ? { ...book, shelf: shelf} : book
         )
       }))
+
+      
     })
   }
 
@@ -86,11 +108,15 @@ class BooksApp extends React.Component {
             </div>
           </div>
         )} />
-        <Route path="/add/" render={() => (
+        <Route path="/add/" render={({history}) => (
           <AddBook 
-            onMoveBook={this.moveBook}
+            onAddBook={(book, shelf) => {
+              this.moveBook(book, shelf)
+              history.push('/')
+            }}
             onSearchBooks={this.searchBooks}
             books={searchResults}
+            
           />
         )} />
 
