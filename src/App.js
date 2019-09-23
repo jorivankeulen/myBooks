@@ -39,10 +39,6 @@ class BooksApp extends React.Component {
     return this.state.books.some(b => b.id === book.id)
   }
 
-  addBook = (book, shelve) => {
-    
-  }
-
   moveBook = (book, shelf) => {
     let id = book.id
     book.shelf = shelf
@@ -59,6 +55,9 @@ class BooksApp extends React.Component {
           ? prevState.books.push(book)
           : this.state.books
       }))
+      // chain-link? 
+      // or integrate into one setState?
+      // or separate moveBook & addBook methods?
       this.setState(prevState => ({
         books: prevState.books.map(
           book => book.id === id ? { ...book, shelf: shelf} : book
