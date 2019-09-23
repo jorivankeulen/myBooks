@@ -30,12 +30,14 @@ class BooksApp extends React.Component {
 
   searchBooks = (query) => {
     BooksAPI.search(query).then((data) => {
-      let _data = data.map((b) => {
-        return this.bookExists(b) 
-          ? {...b, shelf: this.state.books.filter(c => b.id === c.id)[0]} 
-          : b
-      })
-      this.setState({searchResults: (data != null && data.length > 0) ? _data : []})
+      let _data = (data != null && data.length > 0) 
+        ? data.map((b) => {
+          return this.bookExists(b) 
+            ? {...b, shelf: this.state.books.filter(c => b.id === c.id)[0].shelf} 
+            : b
+        })
+        : []
+      this.setState({searchResults: _data})
     })
   }
 
