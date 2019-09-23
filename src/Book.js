@@ -9,7 +9,7 @@ const Book = (props) => {
                     <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: 'url("'+props.book.imageLinks.thumbnail+'")' }}></div>
                     <BookMenu 
                         shelf={props.book.shelf}
-                        book={props.book.id}
+                        book={props.book}
                         onMoveBook={props.onMoveBook}
                     />
                 </div>
