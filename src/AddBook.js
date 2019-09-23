@@ -21,7 +21,6 @@ class AddBook extends Component {
     }
 
     render(){
-        // const books = []
         const { query } = this.state
         const { onAddBook, books } = this.props
         return(
